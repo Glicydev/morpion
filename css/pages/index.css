@@ -1,0 +1,81 @@
+.game {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+}
+.game #plate {
+  width: 30vw;
+}
+
+#board {
+  width: 26rem;
+  height: 26rem;
+}
+#board tbody {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+#board tbody tr {
+  display: flex;
+  gap: 5px;
+}
+#board tbody tr td {
+  height: 5.6666666667rem;
+  width: 5.6666666667rem;
+  background-color: white;
+  border: 1px solid rgb(221, 221, 221);
+  transition: all 0.1s;
+  display: grid;
+  place-items: center;
+}
+#board tbody tr td:hover {
+  cursor: pointer;
+  background-color: rgb(238, 238, 238);
+}
+
+#winDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.091);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  display: grid;
+  place-items: center;
+  display: none;
+}
+#winDiv .popup {
+  width: 40rem;
+  height: 20rem;
+  background-color: #f5f5f5;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  position: relative;
+}
+#winDiv .popup .close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 13px;
+  border: none;
+  outline: none;
+  background-color: #f5f5f5;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+#winDiv .popup .close:hover {
+  background-color: #e9e9e9;
+}
+
+@keyframes popup {
+  to {
+    top: 100vh;
+  }
+}/*# sourceMappingURL=index.css.map */

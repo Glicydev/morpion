@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="css/pages/index.css" />
+
+    <script src="js/script.js" defer></script>
+
+    <title>Jeu du morpion</title>
+  </head>
+  <body>
+    <main>
+      <div class="game">
+        <section id="plate">
+          <h1>Jeu du morpion</h1>
+          <table id="board">
+            <tr>
+              <td id="0"></td>
+              <td id="1"></td>
+              <td id="2"></td>
+            </tr>
+            <tr>
+              <td id="3"></td>
+              <td id="4"></td>
+              <td id="5"></td>
+            </tr>
+            <tr>
+              <td id="6"></td>
+              <td id="7"></td>
+              <td id="8"></td>
+            </tr>
+          </table>
+          <button onclick="reset()">Recommencer</button>
+          <p class="player">Player: 0</p>
+          <p class="ai">IA: 0</p>
+        </section>
+      </div>
+      <div id="winDiv">
+        <div class="popup">
+            <button class="close">X</button>
+            <p></p>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
