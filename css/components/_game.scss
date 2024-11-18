@@ -1,30 +1,41 @@
 $size: 26rem;
 
-#board {
-  width: $size;
-  height: $size;
+.game {
+  display: grid;
+  place-items: center;
 
-  tbody {
+  #plate {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    align-items: center;
 
-    tr {
-      display: flex;
-      gap: 5px;
+    #board {
+      height: $size;
+      margin-top: 3rem;
 
-      td {
-        height: $size / 3 - 3rem;
-        width: $size / 3 - 3rem;
-        background-color: white;
-        border: 1px solid rgb(221, 221, 221);
-        transition: all 0.1s;
-        display: grid;
-        place-items: center;
+      tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
 
-        &:hover {
-          cursor: pointer;
-          background-color: rgb(238, 238, 238);
+        tr {
+          display: flex;
+          gap: 5px;
+
+          td {
+            height: $size / 3 - 3rem;
+            width: $size / 3 - 3rem;
+            background-color: white;
+            border: 1px solid rgb(221, 221, 221);
+            transition: all 0.1s;
+            display: grid;
+            place-items: center;
+
+            &:hover {
+              cursor: pointer;
+              background-color: rgb(238, 238, 238);
+            }
+          }
         }
       }
     }
@@ -62,17 +73,19 @@ $size: 26rem;
       outline: none;
       background-color: #f5f5f5;
       transition: all 0.2s;
+      border: 0 solid transparent;
       cursor: pointer;
 
       &:hover {
         background-color: #e9e9e9;
+        border: 1px solid rgb(216, 216, 216);
       }
     }
   }
 }
 
 @keyframes popup {
-    to {
-        top: 100vh;
-    }
+  to {
+    top: 100vh;
+  }
 }
