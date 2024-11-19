@@ -26,7 +26,7 @@ const winningPatterns = [
   [1, 4, 7], // Middle column
   [2, 5, 8], // Right column
   [0, 4, 8], // [\] Diagonal
-  [2, 4, 6], // [/] Diagonam
+  [2, 4, 6], // [/] Diagonal
 ];
 
 function putO(td) {
@@ -94,40 +94,36 @@ function verifyWin() {
   // If there is a pattern with a single signe, so get this signe and it's the winner
   if (winnerPattern) {
     winner = document.getElementById(winnerPattern[0])?.textContent;
+
+    // If there is a winner so win
+    if (winner) {
+      if (winner === "X") {
+        winner = "The player"
+        playerPoints++
+        playerPointsLabel.textContent = "Player: " + playerPoints
+      }
+      else {
+        winner = "The AI"
+        IAPoints++
+        IAPointsLabel.textContent = "IA: " + IAPoints
+      }
+      alert(winner + " Won")
+      reset()
+    }
   }
   else {
     // Look if it's tie (elements is useless but it doesn't roll if i don't put it)
-    tie = ticTacToe.every(elements => {
+    tie = ticTacToe.every(element => {
+
       // They all need to be "X" or "O"
-      for (let i = 0; i < ticTacToe.length - 1; i++) {
-
-        // If one case is empty, it's not tie
-        if (document.getElementById(i).textContent === "")
-          return false;
-      }
-
-      // Case if no cases are empty and there are no winner
-      return true;
+      return element === "X" || element === "O"
     })
-  }
 
-  if (winner) {
-    if (winner === "X") {
-      winner = "The player"
-      playerPoints++
-      playerPointsLabel.textContent = "Player: " + playerPoints
+    // If there is a tie, end the game and alert
+    if (tie) {
+      alert("It's a tie !")
+      reset()
     }
-    else {
-      winner = "The AI"
-      IAPoints++
-      IAPointsLabel.textContent = "IA: " + IAPoints
-    }
-    alert(winner + " Won")
-    reset()
-  }
-  else if (tie) {
-    alert("It's a tie !")
-    reset()
   }
 }
 
@@ -196,7 +192,7 @@ function IAPlay() {
 
     if (!played) {
       // If the ia didn't play, so play an random move
-      let randomIndex = 0;
+      let randomIndex = -1;
 
       // generate an random index until the case with the index
       while (ticTacToe[randomIndex] !== "") {
@@ -206,6 +202,5 @@ function IAPlay() {
       const caseToClick = document.getElementById(randomIndex);
       caseToClick.click()
     }
-    console.log(ticTacToe)
   }, Math.random() * 500 + 500);
 }
