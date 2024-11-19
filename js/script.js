@@ -29,11 +29,21 @@ const winningPatterns = [
   [2, 4, 6], // [/] Diagonal
 ];
 
+/**
+ * Puts an O to an case (in parameter)
+ * 
+ * @param {HTMLElement} td 
+ */
 function putO(td) {
   td.innerHTML = "<p>O</p>";
   td.color = "red";
 }
 
+/**
+ * Puts an X to an case (in parameter)
+ * 
+ * @param {HTMLElement} td 
+ */
 function putX(td) {
   td.innerHTML = "<p>X</p>";
   td.color = "green";
@@ -48,6 +58,7 @@ function handleTdClick(td) {
   actualCharacter = actualCharacter === "X" ? "O" : "X"
 }
 
+// Do what it have to do when an case is clicked
 tds.forEach((td) =>
   td.addEventListener("click", (e) => {
     if (!e.target.innerHTML && !winner) {
@@ -175,6 +186,9 @@ function placeIfCan(character) {
   return clicked
 }
 
+/**
+ * Let the ia play
+ */
 function IAPlay() {
 
   // SetTimeout to make the time-reaction of the ia (makes it looks like more like an human)
