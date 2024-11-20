@@ -30,7 +30,7 @@ html {
 .game #plate button {
   padding: 5px 1rem;
   border-radius: 3px;
-  border: 1px solid gray;
+  border: 1px solid rgb(190, 190, 190);
   transition: all 0.1s;
   font-size: 1.2rem;
   margin-bottom: 2rem;
