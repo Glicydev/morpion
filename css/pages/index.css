@@ -27,6 +27,18 @@ html {
   flex-direction: column;
   align-items: center;
 }
+.game #plate button {
+  padding: 5px 1rem;
+  border-radius: 3px;
+  border: 1px solid gray;
+  transition: all 0.1s;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
+.game #plate button:hover {
+  background-color: rgb(226, 226, 226);
+}
 .game #plate #board {
   height: 26rem;
   margin-top: 3rem;
@@ -45,13 +57,14 @@ html {
   width: 5.6666666667rem;
   background-color: white;
   border: 1px solid rgb(221, 221, 221);
-  transition: all 0.1s;
+  transition: all 0.2s;
   display: grid;
   place-items: center;
+  border-radius: 8px;
 }
 .game #plate #board tbody tr td:hover {
   cursor: pointer;
-  background-color: rgb(238, 238, 238);
+  background-color: rgb(246, 246, 246);
 }
 
 #winDiv {

@@ -49,7 +49,7 @@ function putX(td) {
   td.color = "green";
 }
 
-function handleTdClick(td) {
+function handlePlayerClick(td) {
   // change the value in the plate variable
   ticTacToe[td.id] = actualCharacter
 
@@ -63,7 +63,7 @@ tds.forEach((td) =>
   td.addEventListener("click", (e) => {
     if (!e.target.innerHTML && !winner) {
       // Do what the user asked for by clicking
-      handleTdClick(e.target);
+      handlePlayerClick(e.target);
 
       // Let's look if the user won with his move
       verifyWin();
