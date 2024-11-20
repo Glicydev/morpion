@@ -174,6 +174,7 @@ function placeIfCan(character) {
 function IAPlay() {
   // SetTimeout to make the time-reaction of the ia (makes it looks like more like an human)
   setTimeout(() => {
+    testFirstStep();
     let played = false;
 
     // Place an circle to win if the IA is about to win
@@ -197,4 +198,46 @@ function IAPlay() {
       caseToClick.click();
     }
   }, Math.random() * 500 + 500);
+}
+
+//------------------------------------IA TEST PART------------------------------->
+function IAWin(parallelGame) {
+  return winningPatterns.some((winningPattern) => {
+    winningPattern.every((index) => parallelGame[index] === "O");
+  });
+}
+
+function PlayerWin(parallelGame) {
+  return winningPatterns.some((winningPattern) => {
+    winningPattern.every((index) => parallelGame[index] === "X");
+  });
+}
+
+function isParallelGameFull(parallelGame) {
+  return parallelGame.every((element) => element !== "s");
+}
+
+function getEmptyCases(parallelGame) {
+  let emptyCases = [];
+
+  parallelGame.forEach((element, index) => {
+    element === "" ? emptyCases.push(index) : "";
+  });
+
+  return emptyCases;
+}
+
+function iaTests(parallelGame, currentPlayer) {
+  if (IAWin(parallelGame)) return Infinity
+  if (PlayerWin(parallelGame)) return -Infinity
+  if (isParallelGameFull(parallelGame)) return 0
+
+  const emptyCases = getEmptyCases(parallelGame)
+
+  for (let emptyIndex of emptyCases) {
+    currentPlayer === "X" ? "O" : "X"
+    parallelGame[emptyIndex] = currentPlayer
+
+    return iaTests(parallelGame)
+  }
 }
