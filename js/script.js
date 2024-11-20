@@ -201,43 +201,43 @@ function IAPlay() {
 }
 
 //------------------------------------IA TEST PART------------------------------->
-function IAWin(parallelGame) {
-  return winningPatterns.some((winningPattern) => {
-    winningPattern.every((index) => parallelGame[index] === "O");
-  });
-}
+// function IAWin(parallelGame) {
+//   return winningPatterns.some((winningPattern) => {
+//     winningPattern.every((index) => parallelGame[index] === "O");
+//   });
+// }
 
-function PlayerWin(parallelGame) {
-  return winningPatterns.some((winningPattern) => {
-    winningPattern.every((index) => parallelGame[index] === "X");
-  });
-}
+// function PlayerWin(parallelGame) {
+//   return winningPatterns.some((winningPattern) => {
+//     winningPattern.every((index) => parallelGame[index] === "X");
+//   });
+// }
 
-function isParallelGameFull(parallelGame) {
-  return parallelGame.every((element) => element !== "s");
-}
+// function isParallelGameFull(parallelGame) {
+//   return parallelGame.every((element) => element !== "s");
+// }
 
-function getEmptyCases(parallelGame) {
-  let emptyCases = [];
+// function getEmptyCases(parallelGame) {
+//   let emptyCases = [];
 
-  parallelGame.forEach((element, index) => {
-    element === "" ? emptyCases.push(index) : "";
-  });
+//   parallelGame.forEach((element, index) => {
+//     element === "" ? emptyCases.push(index) : "";
+//   });
 
-  return emptyCases;
-}
+//   return emptyCases;
+// }
 
-function iaTests(parallelGame, currentPlayer) {
-  if (IAWin(parallelGame)) return Infinity
-  if (PlayerWin(parallelGame)) return -Infinity
-  if (isParallelGameFull(parallelGame)) return 0
+// function iaTests(parallelGame, currentPlayer) {
+//   if (IAWin(parallelGame)) return Infinity
+//   if (PlayerWin(parallelGame)) return -Infinity
+//   if (isParallelGameFull(parallelGame)) return 0
 
-  const emptyCases = getEmptyCases(parallelGame)
+//   const emptyCases = getEmptyCases(parallelGame)
 
-  for (let emptyIndex of emptyCases) {
-    currentPlayer === "X" ? "O" : "X"
-    parallelGame[emptyIndex] = currentPlayer
+//   for (let emptyIndex of emptyCases) {
+//     currentPlayer === "X" ? "O" : "X"
+//     parallelGame[emptyIndex] = currentPlayer
 
-    return iaTests(parallelGame)
-  }
-}
+//     return iaTests(parallelGame)
+//   }
+// }
