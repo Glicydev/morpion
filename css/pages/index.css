@@ -66,6 +66,10 @@ html {
   cursor: pointer;
   background-color: rgb(246, 246, 246);
 }
+.game #plate #board tbody tr td p {
+  font-size: 2rem;
+  font-family: cursive;
+}
 
 #winDiv {
   position: absolute;

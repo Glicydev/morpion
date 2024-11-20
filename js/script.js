@@ -1,16 +1,16 @@
 // Tic tac toe HTMLElements
-const btnRestart = document.querySelector("button")
-const tds = document.querySelectorAll("td")
-const playerPointsLabel = document.querySelector(".player")
-const IAPointsLabel = document.querySelector(".ai")
+const btnRestart = document.querySelector("button");
+const tds = document.querySelectorAll("td");
+const playerPointsLabel = document.querySelector(".player");
+const IAPointsLabel = document.querySelector(".ai");
 
 // The winning / tie message HTMLElements
-const winDiv = document.getElementById("#winDiv")
-const closeButton = document.querySelector(".close")
-const popupP = document.querySelector(".popup p")
+const winDiv = document.getElementById("#winDiv");
+const closeButton = document.querySelector(".close");
+const popupP = document.querySelector(".popup p");
 
 // Set by default the actual caracter to X (the player), so the player will start to play
-let actualCharacter = "X"
+let actualCharacter = "X";
 
 let ticTacToe = ["", "", "", "", "", "", "", "", ""];
 let winner = null;
@@ -31,31 +31,29 @@ const winningPatterns = [
 
 /**
  * Puts an O to an case (in parameter)
- * 
- * @param {HTMLElement} td 
+ *
+ * @param {HTMLElement} td
  */
-function putO(td) {
+function placeO(td) {
   td.innerHTML = "<p>O</p>";
-  td.color = "red";
 }
 
 /**
  * Puts an X to an case (in parameter)
- * 
- * @param {HTMLElement} td 
+ *
+ * @param {HTMLElement} td
  */
-function putX(td) {
+function placeX(td) {
   td.innerHTML = "<p>X</p>";
-  td.color = "green";
 }
 
 function handlePlayerClick(td) {
   // change the value in the plate variable
-  ticTacToe[td.id] = actualCharacter
+  ticTacToe[td.id] = actualCharacter;
 
   // Put a cross or a circle and change the actual character
-  actualCharacter === "X" ? putX(td) : putO(td);
-  actualCharacter = actualCharacter === "X" ? "O" : "X"
+  actualCharacter === "X" ? placeX(td) : placeO(td);
+  actualCharacter = actualCharacter === "X" ? "O" : "X";
 }
 
 // Do what it have to do when an case is clicked
@@ -83,57 +81,41 @@ tds.forEach((td) =>
 
 function verifyWin() {
   let winnerPattern = null;
-  try {
-    winnerPattern = winningPatterns.filter(pattern =>
+  winnerPattern = winningPatterns.filter(
+    (pattern) =>
       // If all the elements in the pattern are equals to "X"
-      pattern.every(
-        (index) =>
-          ticTacToe[index] === "X"
-      )
-
+      pattern.every((index) => ticTacToe[index] === "X") ||
       // Or if all the elements in the pattern are equals to O
-      || pattern.every(
-        (index) =>
-          ticTacToe[index] === "O"
-      )
-    )[0]
-  }
-  catch {
-    console.log("No winner")
-  }
+      pattern.every((index) => ticTacToe[index] === "O")
+  )[0];
 
   // If there is a pattern with a single signe, so get this signe and it's the winner
   if (winnerPattern) {
     winner = document.getElementById(winnerPattern[0])?.textContent;
 
-    // If there is a winner so win
-    if (winner) {
-      if (winner === "X") {
-        winner = "The player"
-        playerPoints++
-        playerPointsLabel.textContent = "Player: " + playerPoints
-      }
-      else {
-        winner = "The AI"
-        IAPoints++
-        IAPointsLabel.textContent = "IA: " + IAPoints
-      }
-      alert(winner + " Won")
-      reset()
+    // Make the winner win
+    if (winner === "X") {
+      winner = "The player";
+      playerPoints++;
+      playerPointsLabel.textContent = "Player: " + playerPoints;
+    } else {
+      winner = "The AI";
+      IAPoints++;
+      IAPointsLabel.textContent = "IA: " + IAPoints;
     }
-  }
-  else {
+    alert(winner + " Won");
+    reset();
+  } else {
     // Look if it's tie (elements is useless but it doesn't roll if i don't put it)
-    tie = ticTacToe.every(element => {
-
+    tie = ticTacToe.every((element) => {
       // They all need to be "X" or "O"
-      return element === "X" || element === "O"
-    })
+      return element !== "";
+    });
 
     // If there is a tie, end the game and alert
     if (tie) {
-      alert("It's a tie !")
-      reset()
+      alert("It's a tie !");
+      reset();
     }
   }
 }
@@ -142,66 +124,64 @@ function reset() {
   tds.forEach((td) => (td.innerHTML = ""));
   ticTacToe.fill("");
   winner = null;
-  actualCharacter = "X"
+  actualCharacter = "X";
 }
 
 function TwoElementsAreInPatterns(character, pattern) {
-  const numberCharsInPattern = pattern.filter((index) => ticTacToe[index] === character).length
-  return numberCharsInPattern === 2
+  const numberCharsInPattern = pattern.filter(
+    (index) => ticTacToe[index] === character
+  ).length;
+  return numberCharsInPattern === 2;
 }
 
 function getTheEmptyElementInPattern(pattern) {
-  const elementId = pattern.filter(index => ticTacToe[index] === "")
-  return document.getElementById(elementId)
+  const elementId = pattern.filter((index) => ticTacToe[index] === "");
+  return document.getElementById(elementId);
 }
 
 /**
  * Used to place in the tic tac toe an circle if the user or the IA id about to win (O if IA is about to win and X if player is about to win)
- * 
- * @param {string} character 
+ *
+ * @param {string} character
  */
 function placeIfCan(character) {
   let clicked = false;
 
   // Look for every winning pattern
   for (const winningPattern of winningPatterns) {
-
     // If the 2 same elements are in one winning pattern, it means that the player or the IA is about to win
     if (TwoElementsAreInPatterns(character, winningPattern)) {
-
       // So the ia will try to block the player or to win by finishing the line / column / diagonal
-      const caseToClick = getTheEmptyElementInPattern(winningPattern)
+      const caseToClick = getTheEmptyElementInPattern(winningPattern);
 
       // caseToClick can be null because of line can be like [X] [X] [O] (nowhere to click even if there are 2X)
       if (caseToClick?.textContent === "") {
-        caseToClick.click()
+        caseToClick.click();
 
         // The right button has been pressed, we can now exit and return further the state of true for clicked
-        clicked = true
+        clicked = true;
         break;
       }
     }
   }
 
-  return clicked
+  return clicked;
 }
 
 /**
  * Let the ia play
  */
 function IAPlay() {
-
   // SetTimeout to make the time-reaction of the ia (makes it looks like more like an human)
   setTimeout(() => {
     let played = false;
 
     // Place an circle to win if the IA is about to win
-    played = placeIfCan("O")
+    played = placeIfCan("O");
 
     if (!played) {
-
       // Same thing but if the player is about to win
-      played = placeIfCan("X")
+      played = placeIfCan("X");
     }
 
     if (!played) {
@@ -210,11 +190,11 @@ function IAPlay() {
 
       // generate an random index until the case with the index
       while (ticTacToe[randomIndex] !== "") {
-        randomIndex = Math.floor(Math.random() * 9)
+        randomIndex = Math.floor(Math.random() * 9);
       }
 
       const caseToClick = document.getElementById(randomIndex);
-      caseToClick.click()
+      caseToClick.click();
     }
   }, Math.random() * 500 + 500);
 }
