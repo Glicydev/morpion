@@ -174,7 +174,6 @@ function placeIfCan(character) {
 function IAPlay() {
   // SetTimeout to make the time-reaction of the ia (makes it looks like more like an human)
   setTimeout(() => {
-    testFirstStep();
     let played = false;
 
     // Place an circle to win if the IA is about to win
