@@ -1,8 +1,8 @@
 // Tic tac toe HTMLElements
 const btnRestart = document.querySelector("button");
 const tds = document.querySelectorAll("td");
-const playerPointsLabel = document.querySelector(".player");
-const IAPointsLabel = document.querySelector(".ai");
+const XPointsLabel = document.querySelector(".player");
+const OPointsLabel = document.querySelector(".ai");
 const playAgainstAIcheckbox = document.querySelector("input[type=checkbox]");
 const XTime = document.querySelector(".playerOneTime");
 const YTime = document.querySelector(".playerTwoTime");
@@ -24,8 +24,8 @@ let playAgainstAi = false;
 let ticTacToe = ["", "", "", "", "", "", "", "", ""];
 let winner = null;
 let tie = false;
-let playerPoints = 0;
-let IAPoints = 0;
+let XPoints = 0;
+let OPoints = 0;
 
 const winningPatterns = [
   [0, 1, 2], // Top row
@@ -40,7 +40,7 @@ const winningPatterns = [
 
 playAgainstAIcheckbox.addEventListener("click", () => {
   playAgainstAi = !playAgainstAi;
-  resetTime(9)
+  resetTime(9);
 });
 
 /**
@@ -120,12 +120,12 @@ function verifyWin() {
     // Make the winner win
     if (winner === "X") {
       winner = "The player";
-      playerPoints++;
-      playerPointsLabel.textContent = "Player: " + playerPoints;
+      XPoints++;
+      XPointsLabel.textContent = "X: " + XPoints;
     } else {
       winner = "The AI";
-      IAPoints++;
-      IAPointsLabel.textContent = "IA: " + IAPoints;
+      OPoints++;
+      OPointsLabel.textContent = "O: " + OPoints;
     }
     alert(winner + " Won");
     reset();
@@ -153,17 +153,17 @@ function reset() {
 
   playAgainstAIcheckbox.disabled = false;
 
-  resetTime()
+  resetTime();
 }
 
 function resetTime() {
-  XCentiSeconds = 0
-  XSeconds = 0
-  XTime.textContent = "X: 0:00"
+  XCentiSeconds = 0;
+  XSeconds = 0;
+  XTime.textContent = "X: 0:00";
 
-  OCentiSeconds = 0
-  OCentiSeconds = 0
-  YTime.textContent = "O: 0:00"
+  OCentiSeconds = 0;
+  OCentiSeconds = 0;
+  YTime.textContent = "O: 0:00";
 }
 
 function TwoElementsAreInPatterns(character, pattern) {
@@ -194,6 +194,7 @@ function getBestMove() {
   }
 
   const maxPoints = Math.max(...points);
+  console.log(`Points: ${points}, maxPoints: ${maxPoints}`);
 
   if (maxPoints > 0) {
     index = points.indexOf(maxPoints);
@@ -285,6 +286,28 @@ setInterval(() => {
     changePlayerTime(OSeconds, OCentiSeconds, YTime);
   }
 }, 10);
+
+function savePoints() {
+  localStorage.setItem("points", JSON.stringify({
+    x: XPoints,
+    o: OPoints
+  }));
+}
+
+function putPointsFromLocalstorage() {
+  const points = JSON.parse(localStorage.getItem("points"))
+
+  if (points) {
+    XPoints = points.x
+    OPoints = points.o
+  }
+
+  XPointsLabel.textContent = `X: ${XPoints}`
+  OPointsLabel.textContent = `O: ${OPoints}`
+}
+
+window.addEventListener('beforeunload', savePoints)
+window.addEventListener('DOMContentLoaded', putPointsFromLocalstorage)
 
 //------------------------------------IA TEST PART------------------------------->
 // function IAWin(parallelGame) {
