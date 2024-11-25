@@ -4,12 +4,12 @@ const tds = document.querySelectorAll("td");
 const XPointsLabel = document.querySelector(".player");
 const OPointsLabel = document.querySelector(".ai");
 const playAgainstAIcheckbox = document.getElementById("playAgainstAI");
-const startCheckbox = document.getElementById("start")
+const startCheckbox = document.getElementById("start");
 const XTime = document.querySelector(".playerOneTime");
 const YTime = document.querySelector(".playerTwoTime");
 
-let iaCaracter = "O"
-let playerCaracter = "X"
+let iaCaracter = "O";
+let playerCaracter = "X";
 let XSeconds = 0;
 let XCentiSeconds = 0;
 let OSeconds = 0;
@@ -44,21 +44,20 @@ const winningPatterns = [
 playAgainstAIcheckbox.addEventListener("click", () => {
   playAgainstAi = !playAgainstAi;
   resetTime();
-  if (playAgainstAi && actualCharacter === iaCaracter)
-    IAPlay()
+  if (playAgainstAi && actualCharacter === iaCaracter) IAPlay();
 
-  startCheckbox.disabled = !playAgainstAi
+  startCheckbox.disabled = !playAgainstAi;
 });
 
 startCheckbox.addEventListener("click", () => {
-  iaCaracter = iaCaracter === "X" ? "O" : "X"
-  playerCaracter = playerCaracter === "X" ? "O" : "X"
-  resetTime()
+  iaCaracter = iaCaracter === "X" ? "O" : "X";
+  playerCaracter = playerCaracter === "X" ? "O" : "X";
+  resetTime();
 
   if (iaCaracter === "X") {
-    IAPlay()
+    IAPlay();
   }
-})
+});
 
 /**
  * Puts an O to an case (in parameter)
@@ -108,7 +107,7 @@ tds.forEach((td) =>
       // Let's look if he won with his move
       verifyWin();
 
-        if (actualCharacter === iaCaracter && playAgainstAi) {
+      if (actualCharacter === iaCaracter && playAgainstAi) {
         if (!winner) {
           // It's his turn but only if the ither didn't win
           IAPlay();
@@ -172,7 +171,6 @@ function reset() {
   playAgainstAIcheckbox.disabled = false;
   startCheckbox.disabled = false;
 
-
   resetTime();
 }
 
@@ -201,12 +199,15 @@ function getTheEmptyElementInPattern(pattern) {
 function getBestMove() {
   let index = -1;
   let points = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  let maxPointsCases = [];
 
   for (let i = 0; i < 9; i++) {
     winningPatterns.forEach((winningPattern) => {
       if (winningPattern.includes(i)) {
         if (ticTacToe[i] === "") {
-          if (winningPattern.every((index) => ticTacToe[index] !== playerCaracter))
+          if (
+            winningPattern.every((index) => ticTacToe[index] !== playerCaracter)
+          )
             points[i]++;
         }
       }
@@ -214,9 +215,16 @@ function getBestMove() {
   }
 
   const maxPoints = Math.max(...points);
+  points.forEach((point, index) => {
+    if (point === maxPoints) {
+      maxPointsCases.push(index);
+    }
+  });
 
-  if (maxPoints > 0) {
+  if (maxPoints > 0 && maxPointsCases.length === 1) {
     index = points.indexOf(maxPoints);
+  } else if (maxPoints > 0 && maxPointsCases.length > 1) {
+    return maxPointsCases[Math.floor(Math.random() * maxPointsCases.length)];
   } else {
     index = Math.floor(Math.random() * 10);
     while (ticTacToe[index] !== "") {
