@@ -64,7 +64,7 @@ startCheckbox.addEventListener("click", () => {
   }
   setTimeout(() => {
     isStartTimeOut = false
-  }, 1000)
+  }, 3000)
 });
 
 /**
