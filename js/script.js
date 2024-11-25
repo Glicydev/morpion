@@ -95,6 +95,7 @@ function handleClick(td) {
   actualCharacter = actualCharacter === "X" ? "O" : "X";
 
   playAgainstAIcheckbox.disabled = true;
+  startCheckbox.disabled = true;
 }
 
 // Do what it have to do when an case is clicked
