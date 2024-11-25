@@ -3,7 +3,14 @@ const btnRestart = document.querySelector("button");
 const tds = document.querySelectorAll("td");
 const playerPointsLabel = document.querySelector(".player");
 const IAPointsLabel = document.querySelector(".ai");
-const playAgainstAIcheckbox = document.querySelector("input[type=checkbox]")
+const playAgainstAIcheckbox = document.querySelector("input[type=checkbox]");
+const XTime = document.querySelector(".playerOneTime");
+const YTime = document.querySelector(".playerTwoTime");
+
+let XSeconds = 0;
+let XCentiSeconds = 0;
+let OSeconds = 0;
+let OCentiSeconds = 0;
 
 // The winning / tie message HTMLElements
 const winDiv = document.getElementById("#winDiv");
@@ -12,7 +19,7 @@ const popupP = document.querySelector(".popup p");
 
 // Set by default the actual caracter to X (the player), so the player will start to play
 let actualCharacter = "X";
-let playAgainstAi = false
+let playAgainstAi = false;
 
 let ticTacToe = ["", "", "", "", "", "", "", "", ""];
 let winner = null;
@@ -32,9 +39,9 @@ const winningPatterns = [
 ];
 
 playAgainstAIcheckbox.addEventListener("click", () => {
-  playAgainstAi = !playAgainstAi
-  console.log(playAgainstAi)
-})
+  playAgainstAi = !playAgainstAi;
+  resetTime(9)
+});
 
 /**
  * Puts an O to an case (in parameter)
@@ -70,7 +77,7 @@ function handlePlayerClick(td) {
   actualCharacter === "X" ? placeX(td) : placeO(td);
   actualCharacter = actualCharacter === "X" ? "O" : "X";
 
-  playAgainstAIcheckbox.disabled = true
+  playAgainstAIcheckbox.disabled = true;
 }
 
 // Do what it have to do when an case is clicked
@@ -140,9 +147,23 @@ function verifyWin() {
 function reset() {
   tds.forEach((td) => (td.innerHTML = ""));
   ticTacToe.fill("");
+
   winner = null;
   actualCharacter = "X";
+
   playAgainstAIcheckbox.disabled = false;
+
+  resetTime()
+}
+
+function resetTime() {
+  XCentiSeconds = 0
+  XSeconds = 0
+  XTime.textContent = "X: 0:00"
+
+  OCentiSeconds = 0
+  OCentiSeconds = 0
+  YTime.textContent = "O: 0:00"
 }
 
 function TwoElementsAreInPatterns(character, pattern) {
@@ -240,6 +261,30 @@ function IAPlay() {
     }
   }, Math.random() * 500 + 500);
 }
+
+function changePlayerTime(seconds, centiSeconds, playerP) {
+  playerP.textContent = `${actualCharacter}: ${seconds}:${centiSeconds}`;
+}
+
+setInterval(() => {
+  if (actualCharacter === "X") {
+    if (XCentiSeconds < 99) {
+      XCentiSeconds++;
+    } else {
+      XCentiSeconds = 0;
+      XSeconds++;
+    }
+    changePlayerTime(XSeconds, XCentiSeconds, XTime);
+  } else {
+    if (OCentiSeconds < 99) {
+      OCentiSeconds++;
+    } else {
+      OCentiSeconds = 0;
+      OSeconds++;
+    }
+    changePlayerTime(OSeconds, OCentiSeconds, YTime);
+  }
+}, 10);
 
 //------------------------------------IA TEST PART------------------------------->
 // function IAWin(parallelGame) {

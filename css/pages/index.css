@@ -27,16 +27,28 @@ html {
   flex-direction: column;
   align-items: center;
 }
-.game #plate button {
+.game #plate .end {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 40rem;
+}
+.game #plate .end > button, .game #plate .end > div, .game #plate .end > label {
+  width: 13.3333333333rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.game #plate .end button {
   padding: 5px 1rem;
   border-radius: 3px;
   border: 1px solid rgb(190, 190, 190);
   transition: all 0.1s;
   font-size: 1.2rem;
-  margin-bottom: 2rem;
   cursor: pointer;
 }
-.game #plate button:hover {
+.game #plate .end button:hover {
   background-color: rgb(226, 226, 226);
 }
 .game #plate #board {
@@ -127,4 +139,8 @@ label input[type=checkbox] {
   height: 1.3rem;
   width: 1.3rem;
   margin: 0 1rem 0 0;
+}
+
+.times {
+  margin-bottom: 1rem;
 }/*# sourceMappingURL=index.css.map */

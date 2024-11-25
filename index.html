@@ -32,13 +32,21 @@
               <td id="8"></td>
             </tr>
           </table>
-          <button onclick="reset()">Recommencer</button>
-          <p class="player">Player: 0</p>
-          <p class="ai">IA: 0</p>
-          <label for="playAgainstAI">
-            <input type="checkbox" id="playAgainstAI" />
-            Play against AI
-          </label>
+          <div class="times">
+            <p class="playerOneTime">X: 0:00</p>
+            <p class="playerTwoTime">O: 0:00</p>
+          </div>
+          <section class="end">
+            <div class="points">
+              <p class="player">Player: 0</p>
+              <p class="ai">IA: 0</p>
+            </div>
+            <button onclick="reset()">Recommencer</button>
+            <label for="playAgainstAI">
+              <input type="checkbox" id="playAgainstAI" />
+              Play against AI
+            </label>
+          </section>
         </section>
       </div>
       <div id="winDiv">

@@ -1,4 +1,5 @@
 $size: 26rem;
+$endWidth: 40rem;
 
 .game {
   display: grid;
@@ -9,17 +10,31 @@ $size: 26rem;
     flex-direction: column;
     align-items: center;
 
-    button {
-      padding: 5px 1rem;
-      border-radius: 3px;
-      border: 1px solid rgb(190, 190, 190);
-      transition: all 0.1s;
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-      cursor: pointer;
+    .end {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      width: $endWidth;
 
-      &:hover {
-        background-color: rgb(226, 226, 226);
+      & > button, & > div, & > label {
+        width: $endWidth / 3;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      button {
+        padding: 5px 1rem;
+        border-radius: 3px;
+        border: 1px solid rgb(190, 190, 190);
+        transition: all 0.1s;
+        font-size: 1.2rem;
+        cursor: pointer;
+  
+        &:hover {
+          background-color: rgb(226, 226, 226);
+        }
       }
     }
 
