@@ -115,4 +115,16 @@ html {
   to {
     top: 100vh;
   }
+}
+label {
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+}
+label input[type=checkbox] {
+  margin-top: 1rem;
+  height: 1.3rem;
+  width: 1.3rem;
+  margin: 0 1rem 0 0;
 }/*# sourceMappingURL=index.css.map */

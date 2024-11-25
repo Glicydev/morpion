@@ -3,6 +3,7 @@ const btnRestart = document.querySelector("button");
 const tds = document.querySelectorAll("td");
 const playerPointsLabel = document.querySelector(".player");
 const IAPointsLabel = document.querySelector(".ai");
+const playAgainstAIcheckbox = document.querySelector("input[type=checkbox]")
 
 // The winning / tie message HTMLElements
 const winDiv = document.getElementById("#winDiv");
@@ -11,6 +12,7 @@ const popupP = document.querySelector(".popup p");
 
 // Set by default the actual caracter to X (the player), so the player will start to play
 let actualCharacter = "X";
+let playAgainstAi = false
 
 let ticTacToe = ["", "", "", "", "", "", "", "", ""];
 let winner = null;
@@ -28,6 +30,11 @@ const winningPatterns = [
   [0, 4, 8], // [\] Diagonal
   [2, 4, 6], // [/] Diagonal
 ];
+
+playAgainstAIcheckbox.addEventListener("click", () => {
+  playAgainstAi = !playAgainstAi
+  console.log(playAgainstAi)
+})
 
 /**
  * Puts an O to an case (in parameter)
@@ -62,6 +69,8 @@ function handlePlayerClick(td) {
   // Put a cross or a circle and change the actual character
   actualCharacter === "X" ? placeX(td) : placeO(td);
   actualCharacter = actualCharacter === "X" ? "O" : "X";
+
+  playAgainstAIcheckbox.disabled = true
 }
 
 // Do what it have to do when an case is clicked
@@ -74,7 +83,7 @@ tds.forEach((td) =>
       // Let's look if the user won with his move
       verifyWin();
 
-      if (actualCharacter === "O") {
+      if (actualCharacter === "O" && playAgainstAi) {
         if (!winner) {
           // It's the AI turn but only if the user didn't win
           IAPlay();
@@ -133,6 +142,7 @@ function reset() {
   ticTacToe.fill("");
   winner = null;
   actualCharacter = "X";
+  playAgainstAIcheckbox.disabled = false;
 }
 
 function TwoElementsAreInPatterns(character, pattern) {
