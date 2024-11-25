@@ -3,10 +3,13 @@ const btnRestart = document.querySelector("button");
 const tds = document.querySelectorAll("td");
 const XPointsLabel = document.querySelector(".player");
 const OPointsLabel = document.querySelector(".ai");
-const playAgainstAIcheckbox = document.querySelector("input[type=checkbox]");
+const playAgainstAIcheckbox = document.getElementById("playAgainstAI");
+const startCheckbox = document.getElementById("start")
 const XTime = document.querySelector(".playerOneTime");
 const YTime = document.querySelector(".playerTwoTime");
 
+let iaCaracter = "O"
+let playerCaracter = "X"
 let XSeconds = 0;
 let XCentiSeconds = 0;
 let OSeconds = 0;
@@ -40,8 +43,22 @@ const winningPatterns = [
 
 playAgainstAIcheckbox.addEventListener("click", () => {
   playAgainstAi = !playAgainstAi;
-  resetTime(9);
+  resetTime();
+  if (playAgainstAi && actualCharacter === iaCaracter)
+    IAPlay()
+
+  startCheckbox.disabled = !playAgainstAi
 });
+
+startCheckbox.addEventListener("click", () => {
+  iaCaracter = iaCaracter === "X" ? "O" : "X"
+  playerCaracter = playerCaracter === "X" ? "O" : "X"
+  resetTime()
+
+  if (iaCaracter === "X") {
+    IAPlay()
+  }
+})
 
 /**
  * Puts an O to an case (in parameter)
@@ -69,7 +86,7 @@ function placeX(td) {
   td.innerHTML = "<p>X</p>";
 }
 
-function handlePlayerClick(td) {
+function handleClick(td) {
   // change the value in the plate variable
   ticTacToe[td.id] = actualCharacter;
 
@@ -84,15 +101,15 @@ function handlePlayerClick(td) {
 tds.forEach((td) =>
   td.addEventListener("click", (e) => {
     if (!e.target.innerHTML && !winner) {
-      // Do what the user asked for by clicking
-      handlePlayerClick(e.target);
+      // Do what he asked for by clicking
+      handleClick(e.target);
 
-      // Let's look if the user won with his move
+      // Let's look if he won with his move
       verifyWin();
 
-      if (actualCharacter === "O" && playAgainstAi) {
+        if (actualCharacter === iaCaracter && playAgainstAi) {
         if (!winner) {
-          // It's the AI turn but only if the user didn't win
+          // It's his turn but only if the ither didn't win
           IAPlay();
         }
 
@@ -118,7 +135,7 @@ function verifyWin() {
     winner = document.getElementById(winnerPattern[0])?.textContent;
 
     // Make the winner win
-    if (winner === "X") {
+    if (winner !== iaCaracter) {
       winner = "The player";
       XPoints++;
       XPointsLabel.textContent = "X: " + XPoints;
@@ -152,6 +169,8 @@ function reset() {
   actualCharacter = "X";
 
   playAgainstAIcheckbox.disabled = false;
+  startCheckbox.disabled = false;
+
 
   resetTime();
 }
@@ -186,7 +205,7 @@ function getBestMove() {
     winningPatterns.forEach((winningPattern) => {
       if (winningPattern.includes(i)) {
         if (ticTacToe[i] === "") {
-          if (winningPattern.every((index) => ticTacToe[index] !== "X"))
+          if (winningPattern.every((index) => ticTacToe[index] !== playerCaracter))
             points[i]++;
         }
       }
@@ -194,7 +213,6 @@ function getBestMove() {
   }
 
   const maxPoints = Math.max(...points);
-  console.log(`Points: ${points}, maxPoints: ${maxPoints}`);
 
   if (maxPoints > 0) {
     index = points.indexOf(maxPoints);
@@ -246,11 +264,11 @@ function IAPlay() {
     let played = false;
 
     // Place an circle to win if the IA is about to win
-    played = placeIfCan("O");
+    played = placeIfCan(iaCaracter);
 
     if (!played) {
       // Same thing but if the player is about to win
-      played = placeIfCan("X");
+      played = placeIfCan(playerCaracter);
     }
 
     if (!played) {

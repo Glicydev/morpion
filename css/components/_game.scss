@@ -14,10 +14,10 @@ $endWidth: 40rem;
       display: flex;
       align-items: center;
       justify-content: space-evenly;
-      width: $endWidth;
+      width: $endWidth + 10rem;
 
       & > button, & > div, & > label {
-        width: $endWidth / 3;
+        width: $endWidth / 4;
         display: flex;
         flex-direction: column;
         justify-content: center;
