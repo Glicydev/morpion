@@ -183,14 +183,14 @@ function getBestMove() {
   let points = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   for (let i = 0; i < 9; i++) {
-    if (ticTacToe[i] === "") {
-      winningPatterns.forEach((winningPattern) => {
-        if (winningPattern.includes(i)) {
-          if (winningPattern.every((index) => ticTacToe[index] === ""))
+    winningPatterns.forEach((winningPattern) => {
+      if (winningPattern.includes(i)) {
+        if (ticTacToe[i] === "") {
+          if (winningPattern.every((index) => ticTacToe[index] !== "X"))
             points[i]++;
         }
-      });
-    }
+      }
+    });
   }
 
   const maxPoints = Math.max(...points);
@@ -288,26 +288,29 @@ setInterval(() => {
 }, 10);
 
 function savePoints() {
-  localStorage.setItem("points", JSON.stringify({
-    x: XPoints,
-    o: OPoints
-  }));
+  localStorage.setItem(
+    "points",
+    JSON.stringify({
+      x: XPoints,
+      o: OPoints,
+    })
+  );
 }
 
 function putPointsFromLocalstorage() {
-  const points = JSON.parse(localStorage.getItem("points"))
+  const points = JSON.parse(localStorage.getItem("points"));
 
   if (points) {
-    XPoints = points.x
-    OPoints = points.o
+    XPoints = points.x;
+    OPoints = points.o;
   }
 
-  XPointsLabel.textContent = `X: ${XPoints}`
-  OPointsLabel.textContent = `O: ${OPoints}`
+  XPointsLabel.textContent = `X: ${XPoints}`;
+  OPointsLabel.textContent = `O: ${OPoints}`;
 }
 
-window.addEventListener('beforeunload', savePoints)
-window.addEventListener('DOMContentLoaded', putPointsFromLocalstorage)
+window.addEventListener("beforeunload", savePoints);
+window.addEventListener("DOMContentLoaded", putPointsFromLocalstorage);
 
 //------------------------------------IA TEST PART------------------------------->
 // function IAWin(parallelGame) {
