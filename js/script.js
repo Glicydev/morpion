@@ -15,6 +15,7 @@ let XCentiSeconds = 0;
 let OSeconds = 0;
 let OCentiSeconds = 0;
 let isBotPlaying = false;
+let isStartTimeOut = false;
 
 // The winning / tie message HTMLElements
 const winDiv = document.getElementById("#winDiv");
@@ -51,13 +52,19 @@ playAgainstAIcheckbox.addEventListener("click", () => {
 });
 
 startCheckbox.addEventListener("click", () => {
-  iaCaracter = iaCaracter === "X" ? "O" : "X";
-  playerCaracter = playerCaracter === "X" ? "O" : "X";
-  resetTime();
+  if (!isStartTimeOut) {
+    iaCaracter = iaCaracter === "X" ? "O" : "X";
+    playerCaracter = playerCaracter === "X" ? "O" : "X";
+    resetTime();
 
-  if (iaCaracter === "X") {
-    IAPlay();
+    if (iaCaracter === "X") {
+      IAPlay();
+    }
+    isStartTimeOut = true;
   }
+  setTimeout(() => {
+    isStartTimeOut = false
+  }, 1000)
 });
 
 /**
