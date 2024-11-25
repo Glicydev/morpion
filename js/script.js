@@ -38,6 +38,14 @@ function placeO(td) {
   td.innerHTML = "<p>O</p>";
 }
 
+function getEmptyCases(parallelGame) {
+  let emptyCases = [];
+  parallelGame.forEach((element, index) => {
+    element === "" ? emptyCases.push(index) : "";
+  });
+  return emptyCases;
+}
+
 /**
  * Puts an X to an case (in parameter)
  *
@@ -50,7 +58,6 @@ function placeX(td) {
 function handlePlayerClick(td) {
   // change the value in the plate variable
   ticTacToe[td.id] = actualCharacter;
-  getBestMove()
 
   // Put a cross or a circle and change the actual character
   actualCharacter === "X" ? placeX(td) : placeO(td);
@@ -140,6 +147,35 @@ function getTheEmptyElementInPattern(pattern) {
   return document.getElementById(elementId);
 }
 
+function getBestMove() {
+  let index = -1;
+  let points = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+  for (let i = 0; i < 9; i++) {
+    if (ticTacToe[i] === "") {
+      winningPatterns.forEach((winningPattern) => {
+        if (winningPattern.includes(i)) {
+          if (winningPattern.every((index) => ticTacToe[index] === ""))
+            points[i]++;
+        }
+      });
+    }
+  }
+
+  const maxPoints = Math.max(...points);
+
+  if (maxPoints > 0) {
+    index = points.indexOf(maxPoints);
+  } else {
+    index = Math.floor(Math.random() * 10);
+    while (ticTacToe[index] !== "") {
+      index = Math.floor(Math.random() * 10);
+    }
+  }
+
+  return index;
+}
+
 /**
  * Used to place in the tic tac toe an circle if the user or the IA id about to win (O if IA is about to win and X if player is about to win)
  *
@@ -186,72 +222,57 @@ function IAPlay() {
     }
 
     if (!played) {
-      // If the ia didn't play, so play an random move
-      let randomIndex = -1;
+      // If the ia didn't play, so play the best move directly
+      const bestIndex = getBestMove();
 
-      // generate an random index until the case with the index
-      while (ticTacToe[randomIndex] !== "") {
-        randomIndex = Math.floor(Math.random() * 9);
-      }
-
-      const caseToClick = document.getElementById(randomIndex);
+      const caseToClick = document.getElementById(bestIndex);
       caseToClick.click();
     }
   }, Math.random() * 500 + 500);
 }
 
 //------------------------------------IA TEST PART------------------------------->
-function IAWin(parallelGame) {
-  return winningPatterns.some((winningPattern) => {
-    winningPattern.every((index) => parallelGame[index] === "O");
-  });
-}
+// function IAWin(parallelGame) {
+//   return winningPatterns.some((winningPattern) => {
+//     winningPattern.every((index) => parallelGame[index] === "O");
+//   });
+// }
 
-function PlayerWin(parallelGame) {
-  return winningPatterns.some((winningPattern) => {
-    winningPattern.every((index) => parallelGame[index] === "X");
-  });
-}
+// function PlayerWin(parallelGame) {
+//   return winningPatterns.some((winningPattern) => {
+//     winningPattern.every((index) => parallelGame[index] === "X");
+//   });
+// }
 
-function isParallelGameFull(parallelGame) {
-  return parallelGame.every((element) => element !== "s");
-}
+// function isParallelGameFull(parallelGame) {
+//   return parallelGame.every((element) => element !== "s");
+// }
 
-function getEmptyCases(parallelGame) {
-  let emptyCases = [];
+// function iaTests(parallelGame, currentPlayer) {
+//   if (IAWin(parallelGame)) return 10;
+//   if (PlayerWin(parallelGame)) return -10;
+//   if (isParallelGameFull(parallelGame))  {return 0};
+//   const emptyCases = getEmptyCases(parallelGame);
 
-  parallelGame.forEach((element, index) => {
-    element === "" ? emptyCases.push(index) : "";
-  });
+//   for (let emptyIndex of emptyCases) {
+//     currentPlayer = currentPlayer === "X" ? "O" : "X";
+//     parallelGame[emptyIndex] = currentPlayer;
+//     return iaTests(parallelGame);
+//   }
+// }
 
-  return emptyCases;
-}
+// function getBestMove() {
+//   const parallelGame = [...ticTacToe];
+//   const currentPlayer = actualCharacter === "X" ? "O" : "X";
+//   const emptyCases = getEmptyCases(parallelGame);
+//   let points = [];
 
-function iaTests(parallelGame, currentPlayer) {
-  if (IAWin(parallelGame)) return 10;
-  if (PlayerWin(parallelGame)) return -10;
-  if (isParallelGameFull(parallelGame))  {return 0};
-  const emptyCases = getEmptyCases(parallelGame);
+//   emptyCases.forEach((emptyIndex) => {
+//     parallelGame[emptyIndex] = currentPlayer
+//     points.push(iaTests(parallelGame, actualCharacter));
+//     parallelGame = ticTacToe
+//   });
+//   console.log(points)
+// }
 
-  for (let emptyIndex of emptyCases) {
-    currentPlayer = currentPlayer === "X" ? "O" : "X";
-    parallelGame[emptyIndex] = currentPlayer;
-    return iaTests(parallelGame);
-  }
-}
-
-function getBestMove() {
-  const parallelGame = [...ticTacToe];
-  const currentPlayer = actualCharacter === "X" ? "O" : "X";
-  const emptyCases = getEmptyCases(parallelGame);
-  let points = [];
-
-  emptyCases.forEach((emptyIndex) => {
-    parallelGame[emptyIndex] = currentPlayer
-    points.push(iaTests(parallelGame, actualCharacter));
-    parallelGame = ticTacToe
-  });
-  console.log(points)
-}
-
-getBestMove()
+// getBestMove()
