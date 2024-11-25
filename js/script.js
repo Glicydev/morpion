@@ -14,6 +14,7 @@ let XSeconds = 0;
 let XCentiSeconds = 0;
 let OSeconds = 0;
 let OCentiSeconds = 0;
+let isBotPlaying = false;
 
 // The winning / tie message HTMLElements
 const winDiv = document.getElementById("#winDiv");
@@ -100,21 +101,23 @@ function handleClick(td) {
 // Do what it have to do when an case is clicked
 tds.forEach((td) =>
   td.addEventListener("click", (e) => {
-    if (!e.target.innerHTML && !winner) {
-      // Do what he asked for by clicking
-      handleClick(e.target);
+    if (!isBotPlaying) {
+      if (!e.target.innerHTML && !winner) {
+        // Do what he asked for by clicking
+        handleClick(e.target);
 
-      // Let's look if he won with his move
-      verifyWin();
-
-      if (actualCharacter === iaCaracter && playAgainstAi) {
-        if (!winner) {
-          // It's his turn but only if the ither didn't win
-          IAPlay();
-        }
-
-        // Now we have to look if our ia won !
+        // Let's look if he won with his move
         verifyWin();
+
+        if (actualCharacter === iaCaracter && playAgainstAi) {
+          if (!winner) {
+            // It's his turn but only if the ither didn't win
+            IAPlay();
+          }
+
+          // Now we have to look if our ia won !
+          verifyWin();
+        }
       }
     }
   })
@@ -269,7 +272,12 @@ function placeIfCan(character) {
  */
 function IAPlay() {
   // SetTimeout to make the time-reaction of the ia (makes it looks like more like an human)
+  isBotPlaying = true;
+  console.log("bot playing");
   setTimeout(() => {
+    isBotPlaying = false;
+    console.log("Bot no more playing");
+
     let played = false;
 
     // Place an circle to win if the IA is about to win
