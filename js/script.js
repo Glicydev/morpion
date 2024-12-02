@@ -1,4 +1,8 @@
 // Tic tac toe HTMLElements
+/**
+ * Auer Aymon Ludovic
+ * Morpion
+ */
 const btnRestart = document.querySelector("button");
 const tds = document.querySelectorAll("td");
 const XPointsLabel = document.querySelector(".player");
